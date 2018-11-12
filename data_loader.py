@@ -51,7 +51,7 @@ class DataLoader(object):
             reader = csv.reader(csvfile)
             for line in reader:
                 lines.append(line)
-
+        path='../data/IMG/'
         X_samples = []
         y_measurements = []
         for line in lines:
@@ -61,9 +61,12 @@ class DataLoader(object):
             steering_center = float(line[3])
             steering_left = steering_center + correction
             steering_right = steering_center - correction
-            X_samples.append(filename_img_center)
-            X_samples.append(filename_img_left)
-            X_samples.append(filename_img_right)
+            center = ndimage.imread(path + filename_img_center)
+            left = ndimage.imread(path + filename_img_left)
+            right = ndimage.imread(path + filename_img_right)
+            X_samples.append(center[70:135,:])
+            X_samples.append(left[70:135,:])
+            X_samples.append(right[70:135,:])
             y_measurements.append(steering_center)
             y_measurements.append(steering_left)
             y_measurements.append(steering_right)
@@ -82,7 +85,8 @@ class DataLoader(object):
                 images = []
                 angles = []
                 for i in range(0, len(batch_samples)):
-                    image = ndimage.imread(path + batch_samples[i])
+                    #image = ndimage.imread(path + batch_samples[i])
+                    image = batch_samples[i]
                     angle = batch_measurements[i]
                     images.append(image)
                     angles.append(angle)

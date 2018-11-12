@@ -19,8 +19,8 @@ validation_generator = data_loader.generator(X_valid, y_valid, batch_size=batch_
 print("Trainig samples:", len(X_train)*2) #original images + flipped images
 print("Validation samples:", len(X_valid)*2)#original images + flipped images
 model = Sequential()
-model.add(Lambda(lambda x: x/127.5 -1, input_shape=(160,320,3)))
-model.add(Cropping2D(cropping=((70,25), (0,0))))
+model.add(Lambda(lambda x: x/127.5 -1, input_shape=(65,320,3)))
+#model.add(Cropping2D(cropping=((70,25), (0,0))))
 #model.add(Reshape((66,200,3)))
 model.add(Conv2D(24,(5,5), activation="relu", strides=(2,2)))
 model.add(Dropout(dropout))
