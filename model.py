@@ -14,14 +14,11 @@ data_loader = DataLoader()
 X_train, X_valid, y_train, y_valid = data_loader.load_samples(validation_size, correction)
 training_generator = data_loader.generator(X_train, y_train, batch_size=batch_size)
 validation_generator = data_loader.generator(X_valid, y_valid, batch_size=batch_size)
-#X_train, y_train = data_loader.load()
 
-print("Trainig samples:", len(X_train)*2) #original images + flipped images
-print("Validation samples:", len(X_valid)*2)#original images + flipped images
+print("Trainig samples:", len(X_train)) 
+print("Validation samples:", len(X_valid))
 model = Sequential()
 model.add(Lambda(lambda x: x/127.5 -1, input_shape=(65,320,3)))
-#model.add(Cropping2D(cropping=((70,25), (0,0))))
-#model.add(Reshape((66,200,3)))
 model.add(Conv2D(24,(5,5), activation="relu", strides=(2,2)))
 model.add(Dropout(dropout))
 model.add(Conv2D(36,(5,5), activation="relu", strides=(2,2)))
@@ -41,7 +38,6 @@ model.add(Dense(10))
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
-#model.fit(X_train, y_train, validation_split=0.2, epochs=5, shuffle=True)
 
 history_object = model.fit_generator(training_generator, steps_per_epoch= \
                     len(X_train), validation_data=validation_generator, \

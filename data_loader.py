@@ -27,9 +27,9 @@ class DataLoader(object):
             steering_center = float(line[3])
             steering_left = steering_center + correction
             steering_right = steering_center - correction
-            car_images.append(img_center)
-            car_images.append(img_left)
-            car_images.append(img_right)
+            car_images.append(img_center[70:135,:])
+            car_images.append(img_left[70:135,:])
+            car_images.append(img_right[70:135,:])
             steering_angles.append(steering_center)
             steering_angles.append(steering_left)
             steering_angles.append(steering_right)
