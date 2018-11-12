@@ -5,26 +5,31 @@ import sklearn
 from sklearn.model_selection import train_test_split
 
 class DataLoader(object):
-    
-    def load(self):
+
+    def __init__(self, path = '../data/IMG/', csv_file='../data/driving_log.csv'):
+        self.path = path
+        self.csv_file = csv_file
+
+    def load(self, correction = 0.2):
+        ''' loads the image data directly into memory and augments it'''
         lines = []
-        with open('../data/driving_log.csv') as csvfile:
-            reader = csv.reader(csvfile)
+        with open(self.csv_file) as csvfile:
+            reader = csv.reader(self.csvfile)
             for line in reader:
                 lines.append(line)
 
         car_images = []
         steering_angles = []
         for line in lines:
-            path = '../data/IMG/'
-            correction = 0.2
-            filename_img_center = path + line[0].split('/')[-1]
-            filename_img_left = path + line[1].split('/')[-1]
-            filename_img_right = path + line[2].split('/')[-1]
+            filename_img_center = self.path + line[0].split('/')[-1]
+            filename_img_left = self.path + line[1].split('/')[-1]
+            filename_img_right = self.path + line[2].split('/')[-1]
             img_center = ndimage.imread(filename_img_center)
             img_left = ndimage.imread(filename_img_left)
             img_right = ndimage.imread(filename_img_right)
             steering_center = float(line[3])
+            # corrects the steering angles for the images taken from the left
+            # and right cameras
             steering_left = steering_center + correction
             steering_right = steering_center - correction
             car_images.append(img_center[70:135,:])
@@ -34,6 +39,9 @@ class DataLoader(object):
             steering_angles.append(steering_left)
             steering_angles.append(steering_right)
 
+        # the original dataset is augmented flipping the images and computing
+        # their corresponding steering angles as the negative of the original
+        # one.
         augmented_images, augmented_measurements = [], []
         for image, steering_angle in zip(car_images, steering_angles):
             augmented_images.append(image)
@@ -46,12 +54,15 @@ class DataLoader(object):
         return X_train, y_train
 
     def load_samples(self,test_size= 0.2, correction=0.2):
+        ''' loads the filenames of the images in the dataset and the steering angles
+            Generates the training and validation sets
+        '''
         lines = []
-        with open('../data/driving_log.csv') as csvfile:
+        with open(self.csv_file) as csvfile:
             reader = csv.reader(csvfile)
             for line in reader:
                 lines.append(line)
-        path='../data/IMG/'
+
         X_samples = []
         y_measurements = []
         for line in lines:
@@ -61,12 +72,25 @@ class DataLoader(object):
             steering_center = float(line[3])
             steering_left = steering_center + correction
             steering_right = steering_center - correction
-            center = ndimage.imread(path + filename_img_center)
-            left = ndimage.imread(path + filename_img_left)
-            right = ndimage.imread(path + filename_img_right)
-            X_samples.append(center[70:135,:])
-            X_samples.append(left[70:135,:])
-            X_samples.append(right[70:135,:])
+            
+            ## NOTE: instead of loading the filenames, and if enough RAM is available
+            ## (at least 16GB), it is possible to load all the images directly into memory,
+            ## so that the generator function takes only these images from the RAM memory,
+            ## which is generally faster than reading from disk every time the generator
+            ## function is called (specially if you are using a HDD instead of a SSD).
+            ## center = ndimage.imread(path + filename_img_center)
+            ## left = ndimage.imread(path + filename_img_left)
+            ## right = ndimage.imread(path + filename_img_right)
+            ## X_samples.append(center[70:135,:])
+            ## X_samples.append(left[70:135,:])
+            ## X_samples.append(right[70:135,:])
+            
+            center = path + filename_img_center
+            left = path + filename_img_left
+            right = path + filename_img_right
+            X_samples.append(center)
+            X_samples.append(left)
+            X_samples.append(right)
             y_measurements.append(steering_center)
             y_measurements.append(steering_left)
             y_measurements.append(steering_right)
@@ -85,8 +109,11 @@ class DataLoader(object):
                 images = []
                 angles = []
                 for i in range(0, len(batch_samples)):
-                    #image = ndimage.imread(path + batch_samples[i])
-                    image = batch_samples[i]
+                    image = ndimage.imread(path + batch_samples[i])
+                    image = image[70:135,:]
+                    # NOTE: see note above in load_samples() function 
+                    #image = batch_samples[i]
+                    
                     angle = batch_measurements[i]
                     images.append(image)
                     angles.append(angle)
