@@ -73,7 +73,7 @@ class DataLoader(object):
         X_train, X_valid, y_train, y_valid = train_test_split(X_samples, y_measurements, test_size=test_size, random_state=42)
         return X_train, X_valid, y_train, y_valid
     
-    def generator(self,X_samples, y_measurements, batch_size=128, path='../data/IMG/'):
+    def generator(self,X_samples, y_measurements, batch_size=32, path='../data/IMG/'):
         num_samples = len(X_samples)
         while True: # Loop forever so the generator never terminates
             for offset in range(0, num_samples, batch_size):
