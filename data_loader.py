@@ -14,7 +14,7 @@ class DataLoader(object):
         ''' loads the image data directly into memory and augments it'''
         lines = []
         with open(self.csv_file) as csvfile:
-            reader = csv.reader(self.csvfile)
+            reader = csv.reader(csvfile)
             for line in reader:
                 lines.append(line)
 
@@ -42,15 +42,18 @@ class DataLoader(object):
         # the original dataset is augmented flipping the images and computing
         # their corresponding steering angles as the negative of the original
         # one.
+        '''
         augmented_images, augmented_measurements = [], []
         for image, steering_angle in zip(car_images, steering_angles):
             augmented_images.append(image)
             augmented_measurements.append(steering_angle)
             augmented_images.append(np.fliplr(image))
             augmented_measurements.append(-steering_angle)
-        
         X_train = np.array(augmented_images)
         y_train = np.array(augmented_measurements)
+        '''
+        X_train = np.array(car_images)
+        y_train = np.array(steering_angles)
         return X_train, y_train
 
     def load_samples(self,test_size= 0.2, correction=0.2):
