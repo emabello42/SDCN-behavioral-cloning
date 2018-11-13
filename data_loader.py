@@ -11,7 +11,7 @@ class DataLoader(object):
         self.csv_file = csv_file
 
     def load(self, correction = 0.2):
-        ''' loads the image data directly into memory and augments it'''
+        ''' loads the image data directly in memory'''
         lines = []
         with open(self.csv_file) as csvfile:
             reader = csv.reader(csvfile)
@@ -32,6 +32,7 @@ class DataLoader(object):
             # and right cameras
             steering_left = steering_center + correction
             steering_right = steering_center - correction
+            # the images are cropped to focus the image on the road
             car_images.append(img_center[70:135,:])
             car_images.append(img_left[70:135,:])
             car_images.append(img_right[70:135,:])
@@ -39,26 +40,13 @@ class DataLoader(object):
             steering_angles.append(steering_left)
             steering_angles.append(steering_right)
 
-        # the original dataset is augmented flipping the images and computing
-        # their corresponding steering angles as the negative of the original
-        # one.
-        '''
-        augmented_images, augmented_measurements = [], []
-        for image, steering_angle in zip(car_images, steering_angles):
-            augmented_images.append(image)
-            augmented_measurements.append(steering_angle)
-            augmented_images.append(np.fliplr(image))
-            augmented_measurements.append(-steering_angle)
-        X_train = np.array(augmented_images)
-        y_train = np.array(augmented_measurements)
-        '''
         X_train = np.array(car_images)
         y_train = np.array(steering_angles)
         return X_train, y_train
 
     def load_samples(self,test_size= 0.2, correction=0.2):
-        ''' loads the filenames of the images in the dataset and the steering angles
-            Generates the training and validation sets
+        ''' loads the filenames of the images in the dataset and the steering angles.
+            Generates the training and validation sets too.
         '''
         lines = []
         with open(self.csv_file) as csvfile:
@@ -76,21 +64,9 @@ class DataLoader(object):
             steering_left = steering_center + correction
             steering_right = steering_center - correction
             
-            ## NOTE: instead of loading the filenames, and if enough RAM is available
-            ## (at least 16GB), it is possible to load all the images directly into memory,
-            ## so that the generator function takes only these images from the RAM memory,
-            ## which is generally faster than reading from disk every time the generator
-            ## function is called (specially if you are using a HDD instead of a SSD).
-            ## center = ndimage.imread(path + filename_img_center)
-            ## left = ndimage.imread(path + filename_img_left)
-            ## right = ndimage.imread(path + filename_img_right)
-            ## X_samples.append(center[70:135,:])
-            ## X_samples.append(left[70:135,:])
-            ## X_samples.append(right[70:135,:])
-            
-            center = path + filename_img_center
-            left = path + filename_img_left
-            right = path + filename_img_right
+            center = self.path + filename_img_center
+            left = self.path + filename_img_left
+            right = self.path + filename_img_right
             X_samples.append(center)
             X_samples.append(left)
             X_samples.append(right)
@@ -103,7 +79,8 @@ class DataLoader(object):
         X_train, X_valid, y_train, y_valid = train_test_split(X_samples, y_measurements, test_size=test_size, random_state=42)
         return X_train, X_valid, y_train, y_valid
     
-    def generator(self,X_samples, y_measurements, batch_size=32, path='../data/IMG/'):
+    def generator(self,X_samples, y_measurements, batch_size=32):
+        ''' Generator used to load the images in batches from disk'''
         num_samples = len(X_samples)
         while True: # Loop forever so the generator never terminates
             for offset in range(0, num_samples, batch_size):
@@ -112,20 +89,12 @@ class DataLoader(object):
                 images = []
                 angles = []
                 for i in range(0, len(batch_samples)):
-                    image = ndimage.imread(path + batch_samples[i])
+                    image = ndimage.imread(batch_samples[i])
                     image = image[70:135,:]
-                    # NOTE: see note above in load_samples() function 
-                    #image = batch_samples[i]
-                    
                     angle = batch_measurements[i]
                     images.append(image)
                     angles.append(angle)
                     
-                    #augment the dataset with the corresponding flipped images and angles
-                    images.append(np.fliplr(image))
-                    angles.append(-angle)
-
-                # trim image to only see section with road
                 X_train = np.array(images)
                 y_train = np.array(angles)
                 yield sklearn.utils.shuffle(X_train, y_train)

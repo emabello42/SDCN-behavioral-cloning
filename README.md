@@ -4,10 +4,9 @@
 Overview
 ---
 
-In this project, I use what I've learned about deep neural networks and convolutional neural networks to clone driving behavior. A model is trained, validated and tested using Keras. The model outputs a steering angle to an autonomous vehicle.
+In this project, a convolutional neural network is trained using images taken from three cameras (mounted in front of a car) to output the steering angle to an autonomous vehicle, so that the driving behavior is cloned. The model is trained, validated and tested using Keras.
 
-The [Udacity's Self-Driving Car Simulator](https://github.com/udacity/self-driving-car-sim) is used to steer a car around two tracks for data collection. Then, the image data and steering angles are used to train a neural network and then use the resulting model to drive the car autonomously around both tracks.
-
+The [Udacity's Self-Driving Car Simulator](https://github.com/udacity/self-driving-car-sim) is used to steer a car around two tracks for data collection and testing.
 
 The Project
 ---
@@ -114,7 +113,7 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 ![alt text][image1]
 
 #### 3. Creation of the Training Set & Training Process
-
+parameters: 348219
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
 ![alt text][image2]
