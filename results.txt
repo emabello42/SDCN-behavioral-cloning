@@ -1,0 +1,14 @@
+Trainig samples: 64179
+Train on 51343 samples, validate on 12836 samples
+Epoch 1/5
+2018-11-13 18:59:30.766889: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Creating TensorFlow device (/gpu:0) -> (device: 0, name: GRID K520, pci bus id: 0000:00:03.0)
+51343/51343 [==============================] - 97s 2ms/step - loss: 0.0905 - val_loss: 0.1248
+Epoch 2/5
+51343/51343 [==============================] - 94s 2ms/step - loss: 0.0802 - val_loss: 0.1411
+Epoch 3/5
+51343/51343 [==============================] - 94s 2ms/step - loss: 0.0777 - val_loss: 0.1297
+Epoch 4/5
+51343/51343 [==============================] - 94s 2ms/step - loss: 0.0762 - val_loss: 0.1224
+Epoch 5/5
+51343/51343 [==============================] - 94s 2ms/step - loss: 0.0737 - val_loss: 0.1458
+
