@@ -56,6 +56,10 @@ My project includes the following files:
 * *model.h5* containing a trained convolutional neural network 
 * *README.md* summarizing the results
 * *visualize_loss.py* for loss visualization
+* *run1.mp4* is the video recorded from Track 1 during driving in autonomous
+  mode
+* *run2.mp4* is the video recorded from Track 2 during driving in autonomous
+  mode
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my *drive.py* file, the car can be driven autonomously around the track by executing 
@@ -234,3 +238,10 @@ Here is the visualization of the loss obtained during the training of the final 
 Although with the final model the validation and training loss are bigger than
 in the previous model, this final model was able to drive the car through both
 tracks during a full lap.
+
+Finally, here are the videos I recorded while running the model in autonomous
+mode in the simulator:
+
+
+[![Track 1 - autonomous mode](https://img.youtube.com/vi/_R8782ymPYg/0.jpg)](https://www.youtube.com/watch?v=_R8782ymPYg)
+[![Track 2 - autonomous mode](https://img.youtube.com/vi/jTK0Ad-wXhc/0.jpg)](https://www.youtube.com/watch?v=jTK0Ad-wXhc)
