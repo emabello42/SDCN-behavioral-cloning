@@ -10,7 +10,7 @@ class DataLoader(object):
         self.path = path
         self.csv_file = csv_file
 
-    def load(self, correction = 0.2):
+    def load_samples_v2(self, correction = 0.2):
         ''' loads the image data directly in memory'''
         lines = []
         with open(self.csv_file) as csvfile:
@@ -44,7 +44,7 @@ class DataLoader(object):
         y_train = np.array(steering_angles)
         return X_train, y_train
 
-    def load_samples(self,test_size= 0.2, correction=0.2):
+    def load_samples_v1(self,test_size= 0.2, correction=0.2):
         ''' loads the filenames of the images in the dataset and the steering angles.
             Generates the training and validation sets too.
         '''

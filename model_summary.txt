@@ -1,41 +1,28 @@
-_________________________________________________________________
-Layer (type)                 Output Shape              Param #   
-=================================================================
-lambda_1 (Lambda)            (None, 65, 320, 3)        0         
-_________________________________________________________________
-conv2d_1 (Conv2D)            (None, 31, 158, 24)       1824      
-_________________________________________________________________
-dropout_1 (Dropout)          (None, 31, 158, 24)       0         
-_________________________________________________________________
-conv2d_2 (Conv2D)            (None, 14, 77, 36)        21636     
-_________________________________________________________________
-dropout_2 (Dropout)          (None, 14, 77, 36)        0         
-_________________________________________________________________
-conv2d_3 (Conv2D)            (None, 5, 37, 48)         43248     
-_________________________________________________________________
-dropout_3 (Dropout)          (None, 5, 37, 48)         0         
-_________________________________________________________________
-conv2d_4 (Conv2D)            (None, 3, 35, 64)         27712     
-_________________________________________________________________
-dropout_4 (Dropout)          (None, 3, 35, 64)         0         
-_________________________________________________________________
-conv2d_5 (Conv2D)            (None, 1, 33, 64)         36928     
-_________________________________________________________________
-dropout_5 (Dropout)          (None, 1, 33, 64)         0         
-_________________________________________________________________
-flatten_1 (Flatten)          (None, 2112)              0         
-_________________________________________________________________
-dense_1 (Dense)              (None, 100)               211300    
-_________________________________________________________________
-dropout_6 (Dropout)          (None, 100)               0         
-_________________________________________________________________
-dense_2 (Dense)              (None, 50)                5050      
-_________________________________________________________________
-dropout_7 (Dropout)          (None, 50)                0         
-_________________________________________________________________
-dense_3 (Dense)              (None, 10)                510       
-_________________________________________________________________
-dense_4 (Dense)              (None, 1)                 11        
+| Layer (type)		|	Description					| 	Output Shape	|Param #|   
+|:---------------------:|:-----------------------------------------------------:|:---------------------:|:-----:|
+|lambda_1 (Lambda)      |Normalization						|(None, 65, 320, 3)	|0	|
+|conv2d_1 (Conv2D)      |24 filters, 5x5 kernel size, 2x2 stride, valid padding	|(None, 31, 158, 24)    |1824   |
+|RELU			|							|			|	|
+|dropout_1 (Dropout)    |dropout probability: 0.3     				|(None, 31, 158, 24)    |0      |   
+|conv2d_2 (Conv2D)      |36 filters, 5x5 kernel size, 2x2 stride, valid padding	|(None, 14, 77, 36)     |21636  |   
+|RELU			|							|			|	|
+|dropout_2 (Dropout)    |dropout probability: 0.3				|(None, 14, 77, 36)     |0      |   
+|conv2d_3 (Conv2D)      |48 filters, 5x5 kernel size, 2x2 stride, valid padding	|(None, 5, 37, 48)      |43248  |   
+|RELU			|							|			|	|
+|dropout_3 (Dropout)    |dropout probability: 0.3				|(None, 5, 37, 48)      |0      |   
+|conv2d_4 (Conv2D)      |64 filters, 3x3 kernel size, 1x1 stride, valid padding	|(None, 3, 35, 64)      |27712  |   
+|RELU			|							|			|	|
+|dropout_4 (Dropout)    |dropout probability: 0.3				|(None, 3, 35, 64)      |0      |   
+|conv2d_5 (Conv2D)      |64 filters, 3x3 kernel size, 1x1 stride, valid padding	|(None, 1, 33, 64)      |36928  |   
+|RELU			|							|			|	|
+|dropout_5 (Dropout)    |dropout probability: 0.3				|(None, 1, 33, 64)      |0      |   
+|flatten_1 (Flatten)    |      							|(None, 2112)           |0      |   
+|dense_1 (Dense)        |      							|(None, 100)            |211300 |   
+|dropout_6 (Dropout)    |dropout probability: 0.3				|(None, 100)            |0      |   
+|dense_2 (Dense)        |      							|(None, 50)             |5050   |   
+|dropout_7 (Dropout)    |dropout probability: 0.3				|(None, 50)             |0      |   
+|dense_3 (Dense)        |      							|(None, 10)             |510    |   
+|dense_4 (Dense)        |      							|(None, 1)              |11     |   
 =================================================================
 Total params: 348,219
 Trainable params: 348,219

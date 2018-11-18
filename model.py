@@ -21,18 +21,16 @@ epochs = 5
 data_loader = DataLoader()
 
 if use_generators:
-    X_train, X_valid, y_train, y_valid = data_loader.load_samples(validation_size, correction)
+    X_train, X_valid, y_train, y_valid = data_loader.load_samples_v1(validation_size, correction)
     training_generator = data_loader.generator(X_train, y_train, batch_size=batch_size)
     validation_generator = data_loader.generator(X_valid, y_valid, batch_size=batch_size)
     print("Trainig samples:", len(X_train)) 
     print("Validation samples:", len(X_valid))
 else:
-    X_train, y_train = data_loader.load(correction)
+    X_train, y_train = data_loader.load_samples_v2(correction)
 
 #Creates the model
 model = Sequential()
-
-
 model.add(Lambda(lambda x: x/127.5 -1, input_shape=(65,320,3))) # Add normalization layer
 model.add(Conv2D(24,(5,5), activation="relu", strides=(2,2))) # Conv layer with kernel size 5x5 + RELU activation layer. Outputs 24 feature maps of 31x158
 model.add(Dropout(dropout))
@@ -51,7 +49,6 @@ model.add(Dense(50)) # Fully connected layer
 model.add(Dropout(dropout))
 model.add(Dense(10)) # Fully connected layer
 model.add(Dense(1)) # output: steering angle
-
 model.compile(loss='mse', optimizer='adam')
 model.summary() #print summary of the model
 plot_model(model, to_file='model.png', show_shapes=True)
