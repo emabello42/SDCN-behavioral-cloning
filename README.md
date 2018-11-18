@@ -21,14 +21,19 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
-
+[image1]: ./examples/model.png "Model Visualization"
+[image2]: ./examples/center_2018_11_08_22_29_23_545.jpg "Example 1 - Track 1"
+[image3]: ./examples/center_2018_11_11_00_19_32_755.jpg "Example 1 - Track 2"
+[image4]: ./examples/center_2018_11_08_21_38_39_562.jpg "Example 2 - Track 1"
+[image5]: ./examples/center_2018_11_11_00_26_33_914.jpg "Example 2 - Track 2"
+[image6]: ./examples/center_2018_11_08_21_39_02_139.jpg "Example 3 - Track 1"
+[image7]: ./examples/center_2018_11_11_00_16_30_102.jpg "Example 3 - Track 2"
+[image8]: ./examples/center_2018_11_11_00_20_21_737.jpg "Example center"
+[image9]: ./examples/left_2018_11_11_00_20_21_737.jpg "Example left"
+[image10]: ./examples/right_2018_11_11_00_20_21_737.jpg "Example right"
+[image11]: ./examples/center_2018_11_11_00_19_32_755_cropped.jpg "Example cropped"
+[image12]: ./examples/loss.png "Loss"
+[image13]: ./examples/loss_previous_model.png "Loss - previous model"
 ### Dependencies
 This lab requires:
 
@@ -73,17 +78,10 @@ The model includes RELU layers after each convolutional layer to introduce nonli
 #### 2. Attempts to reduce overfitting in the model
 
 The model contains dropout layers in order to reduce overfitting (*model.py* lines 36, 38, 40, 42, 44, 47 and 49). For every dropout layer is used the same probability of dropout: 0.2: 
-On the other hand, the model was trained and validated using not only the images from the camera in the center, but also from the left and right cameras, using a correction factor of 0.3 to assign the corresponding steering angle for them (see functions *load_samples_X* in *data_loader.py* file).
-
-On the other hand, especial attention was put on the data collection with the
-simulator. The model was trained using car images collected from both tracks.
-For every track the car was driven through multiple laps:
-* Three laps trying to stay the car in the middle of the road.
-* Two laps keeping the car on the left or right sides of the road.
-* One lap traying to drive the car as smoothly as possible in every curve.
-
-These 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+On the other hand, the model was trained and validated using not only the images from the camera in the center, but also from the left and right cameras, using a correction factor of 0.3
+to assign the corresponding steering angle for them (see functions
+*load_samples_X* in *data_loader.py* file). The images were collected from both
+Track 1 and 2.
 
 #### 3. Model parameter tuning
 
@@ -140,62 +138,101 @@ disk in batches of 32). With this final model the car is able to drive autonomou
 
 #### 2. Final Model Architecture
 
-The final model architecture (*model.py* lines 33-52) consisted of a convolutional neural network with the following layers and layer sizes ...
+The final model architecture (*model.py* lines 33-52) consisted of a convolutional neural network with the following layers:
 
 | Layer (type)		|	Description					| 	Output Shape	|Param #|   
 |:---------------------:|:-----------------------------------------------------:|:---------------------:|:-----:|
 |lambda_1 (Lambda)      |Normalization						|(None, 65, 320, 3)	|0	|
 |conv2d_1 (Conv2D)      |24 filters, 5x5 kernel size, 2x2 stride, valid padding	|(None, 31, 158, 24)    |1824   |
 |RELU			|							|			|	|
-|dropout_1 (Dropout)    |dropout probability: 0.3     				|(None, 31, 158, 24)    |0      |   
+|dropout_1 (Dropout)    |dropout probability: 0.2     				|(None, 31, 158, 24)    |0      |   
 |conv2d_2 (Conv2D)      |36 filters, 5x5 kernel size, 2x2 stride, valid padding	|(None, 14, 77, 36)     |21636  |   
 |RELU			|							|			|	|
-|dropout_2 (Dropout)    |dropout probability: 0.3				|(None, 14, 77, 36)     |0      |   
+|dropout_2 (Dropout)    |dropout probability: 0.2				|(None, 14, 77, 36)     |0      |   
 |conv2d_3 (Conv2D)      |48 filters, 5x5 kernel size, 2x2 stride, valid padding	|(None, 5, 37, 48)      |43248  |   
 |RELU			|							|			|	|
-|dropout_3 (Dropout)    |dropout probability: 0.3				|(None, 5, 37, 48)      |0      |   
+|dropout_3 (Dropout)    |dropout probability: 0.2				|(None, 5, 37, 48)      |0      |   
 |conv2d_4 (Conv2D)      |64 filters, 3x3 kernel size, 1x1 stride, valid padding	|(None, 3, 35, 64)      |27712  |   
 |RELU			|							|			|	|
-|dropout_4 (Dropout)    |dropout probability: 0.3				|(None, 3, 35, 64)      |0      |   
+|dropout_4 (Dropout)    |dropout probability: 0.2				|(None, 3, 35, 64)      |0      |   
 |conv2d_5 (Conv2D)      |64 filters, 3x3 kernel size, 1x1 stride, valid padding	|(None, 1, 33, 64)      |36928  |   
 |RELU			|							|			|	|
-|dropout_5 (Dropout)    |dropout probability: 0.3				|(None, 1, 33, 64)      |0      |   
+|dropout_5 (Dropout)    |dropout probability: 0.2				|(None, 1, 33, 64)      |0      |   
 |flatten_1 (Flatten)    |      							|(None, 2112)           |0      |   
-|dense_1 (Dense)        |      							|(None, 100)            |211300 |   
-|dropout_6 (Dropout)    |dropout probability: 0.3				|(None, 100)            |0      |   
-|dense_2 (Dense)        |      							|(None, 50)             |5050   |   
-|dropout_7 (Dropout)    |dropout probability: 0.3				|(None, 50)             |0      |   
-|dense_3 (Dense)        |      							|(None, 10)             |510    |   
+|dense_1 (Dense)        |Fully connected layer    				|(None, 100)            |211300 |   
+|dropout_6 (Dropout)    |dropout probability: 0.2				|(None, 100)            |0      |   
+|dense_2 (Dense)        |Fully connected layer    				|(None, 50)             |5050   |   
+|dropout_7 (Dropout)    |dropout probability: 0.2				|(None, 50)             |0      |   
+|dense_3 (Dense)        |Fully connected layer    				|(None, 10)             |510    |   
 |dense_4 (Dense)        |      							|(None, 1)              |11     |
 
-Here is a visualization of the architecture.
+The total number of parameters to train is: 348,219
+
+Here is a visualization of the architecture:
 
 ![alt text][image1]
 
 #### 3. Creation of the Training Set & Training Process
-parameters: 348219
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
+For every track the car was driven through multiple laps:
+* Three laps trying to stay the car in the middle of the road. Here are
+  examples from both tracks:
+
 ![alt text][image2]
-
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
-
 ![alt text][image3]
+
+* One lap keeping the car on the left side of the road. Examples:
+
 ![alt text][image4]
 ![alt text][image5]
 
-Then I repeated this process on track two in order to get more data points.
-
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+* One lap keeping the car on the right side of the road. Examples:
 
 ![alt text][image6]
 ![alt text][image7]
 
-Etc ....
+* One lap traying to drive the car as smoothly as possible in every curve.
 
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+As described in previous sections, the images taken from the left and right
+cameras were also added to the training and validation sets with their corresponding
+steering angles calculated as:
+
+steering_angle for the left camera image = *<measured steering angle>* + 0.3
+steering_angle for the right camera image = *<measured steering angle>* - 0.3
+
+Here is an example image taken from the center camera:
+
+![alt text][image8]
+
+And the corresponding images taken from the left and right cameras,
+respectively:
+
+![alt text][image9]
+![alt text][image10]
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+After the collection process, I had 64179 number of data points. I then preprocessed this data by cropping them so that the neural network is feed with images focused on the road,
+removing the top portion of the image from pixel 0 to 70 and the bottom portion from pixel 135 to 160. Example:
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+![alt text][image11]
+
+I finally randomly shuffled the data set and put 20% of the data into a validation set.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting.
+
+The ideal number of epochs was 5. The evidence was taken from the loss obtained
+during the training of a previous model, were 20 epochs were used for training:
+
+![alt text][image13]
+
+Where can be seen that from epoch 5 no considerable improvement is achieved.
+
+Here is the visualization of the loss obtained during the training of the final model:
+
+![alt text][image13]
+
+Although with the final model the validation and training loss are bigger than
+in the previous model, this final model was able to drive the car through both
+tracks during a full lap.
+
+I used an adam optimizer so that manually training the learning rate wasn't necessary.
