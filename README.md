@@ -53,8 +53,9 @@ My project includes the following files:
 * *data_loader.py* containing the functions to load and augment the dataset
 * *model.py* containing the script to create and train the model
 * *drive.py* for driving the car in autonomous mode
-* *model.h5* containing a trained convolution neural network 
+* *model.h5* containing a trained convolutional neural network 
 * *README.md* summarizing the results
+* *visualize_loss.py* for loss visualization
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my *drive.py* file, the car can be driven autonomously around the track by executing 
@@ -64,7 +65,7 @@ python drive.py model.h5
 
 #### 3. Submission code is usable and readable
 
-The *model.py* file contains the code for training and saving the convolution neural network. Additionally, *data_loader.py* file contains the code for loading the dataset.
+The *model.py* file contains the code for training and saving the convolutional neural network. Additionally, *data_loader.py* file contains the code for loading the dataset.
 Both files show the pipeline I used for training and validating the model, and they contain comments to explain how the code works.
 
 ### Model Architecture and Training Strategy
@@ -121,8 +122,7 @@ road during the second track.
 
 For the second version of the model, I decided to collect images from the second
 track too. The correction factor for the left and right cameras was 0.2 too. These additional images were also augmented flipping all the images
-like in the first version. This time, the neural network was trained with dropout layers as
-described in section 2 to reduce the overfitting. The resulting model was
+like in the first version. This time, the neural network was trained with dropout layers as to reduce the overfitting. The resulting model was
 capable of passing most of the curves in the Track 2, but it was not able to
 finish a lap without crashing.
 
@@ -173,9 +173,8 @@ Here is a visualization of the architecture:
 ![alt text][image1]
 
 #### 3. Creation of the Training Set & Training Process
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior, I recorded my driving behavior through Track 1 and 2 during multiple laps, following the next strategy:
 
-For every track the car was driven through multiple laps:
 * Three laps trying to stay the car in the middle of the road. Here are
   examples from both tracks:
 
@@ -198,8 +197,9 @@ As described in previous sections, the images taken from the left and right
 cameras were also added to the training and validation sets with their corresponding
 steering angles calculated as:
 
-steering_angle for the left camera image = *<measured steering angle>* + 0.3
-steering_angle for the right camera image = *<measured steering angle>* - 0.3
+steering_angle for the left camera image = *measured steering angle* + 0.3
+
+steering_angle for the right camera image = *measured steering angle* - 0.3
 
 Here is an example image taken from the center camera:
 
@@ -221,11 +221,11 @@ I finally randomly shuffled the data set and put 20% of the data into a validati
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting.
 
 The ideal number of epochs was 5. The evidence was taken from the loss obtained
-during the training of a previous model, were 20 epochs were used for training:
+during the training of a previous model, where 20 epochs were used for training:
 
 ![alt text][image13]
 
-Where can be seen that from epoch 5 no considerable improvement is achieved.
+As can be seen, from epoch 5 no considerable improvement was achieved.
 
 Here is the visualization of the loss obtained during the training of the final model:
 
@@ -234,5 +234,3 @@ Here is the visualization of the loss obtained during the training of the final 
 Although with the final model the validation and training loss are bigger than
 in the previous model, this final model was able to drive the car through both
 tracks during a full lap.
-
-I used an adam optimizer so that manually training the learning rate wasn't necessary.
