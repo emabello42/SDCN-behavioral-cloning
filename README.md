@@ -229,7 +229,7 @@ As can be seen, from epoch 5 no considerable improvement was achieved.
 
 Here is the visualization of the loss obtained during the training of the final model:
 
-![alt text][image13]
+![alt text][image12]
 
 Although with the final model the validation and training loss are bigger than
 in the previous model, this final model was able to drive the car through both
