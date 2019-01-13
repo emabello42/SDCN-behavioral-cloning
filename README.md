@@ -1,21 +1,21 @@
 ## Project: Behavioral Cloning
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-## Demo
-Finally, here are the videos I recorded while running the model in autonomous
-mode in the simulator:
+## Demos
 
 Track 1
 
 [![Track 1 - autonomous mode](https://img.youtube.com/vi/_R8782ymPYg/0.jpg)](https://www.youtube.com/watch?v=_R8782ymPYg)
 
 Track 2
+
 [![Track 2 - autonomous mode](https://img.youtube.com/vi/jTK0Ad-wXhc/0.jpg)](https://www.youtube.com/watch?v=jTK0Ad-wXhc)
+
 
 Overview
 ---
 
-In this project, a convolutional neural network is trained using images taken from three cameras (mounted in front of a car) to output the steering angle to an autonomous vehicle, so that the driving behavior is cloned. The model is trained, validated and tested using Keras.
+In this project, a convolutional neural network is trained to output the steering angle given as input the video taken from a camera located in front of a car, so that to autonomously drive a car in a simulator. The model is trained, validated and tested using Keras in Python.
 
 The [Udacity's Self-Driving Car Simulator](https://github.com/udacity/self-driving-car-sim) is used to steer a car around two tracks for data collection and testing.
 
