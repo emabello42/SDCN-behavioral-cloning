@@ -1,6 +1,17 @@
 ## Project: Behavioral Cloning
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
+## Demo
+Finally, here are the videos I recorded while running the model in autonomous
+mode in the simulator:
+
+Track 1
+
+[![Track 1 - autonomous mode](https://img.youtube.com/vi/_R8782ymPYg/0.jpg)](https://www.youtube.com/watch?v=_R8782ymPYg)
+
+Track 2
+[![Track 2 - autonomous mode](https://img.youtube.com/vi/jTK0Ad-wXhc/0.jpg)](https://www.youtube.com/watch?v=jTK0Ad-wXhc)
+
 Overview
 ---
 
@@ -238,10 +249,3 @@ Here is the visualization of the loss obtained during the training of the final 
 Although with the final model the validation and training loss are bigger than
 in the previous model, this final model was able to drive the car through both
 tracks during a full lap.
-
-Finally, here are the videos I recorded while running the model in autonomous
-mode in the simulator:
-
-
-[![Track 1 - autonomous mode](https://img.youtube.com/vi/_R8782ymPYg/0.jpg)](https://www.youtube.com/watch?v=_R8782ymPYg)
-[![Track 2 - autonomous mode](https://img.youtube.com/vi/jTK0Ad-wXhc/0.jpg)](https://www.youtube.com/watch?v=jTK0Ad-wXhc)
